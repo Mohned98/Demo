@@ -18,13 +18,12 @@ typedef struct SimpleDb
 	uint32 Course3_ID;
 	uint32 Course3_grade;
 }student;
+extern uint32 students_num;
 extern void SDB_APP ();
 extern void SDB_action();
 typedef struct node node ;
-extern uint32 students_num;
 bool extern database_full();
-bool extern SDB_AddEntry();
-void extern createNodeList();
+void extern SDB_AddEntry();
 uint8 extern SDB_GetUsedSize();
 void extern SDB_DeletEntry ();
 bool extern SDB_ReadEntry ();

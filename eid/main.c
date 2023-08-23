@@ -5,11 +5,10 @@
  *      Author: Eid Elsayed Okda
  */
 #include<stdio.h>
-#include<stdlib.h>
 #include"SDB.h"
 int main()
 {
-	setbuf(stdout,NULL);
+setbuf(stdout,NULL);
 	printf("The minimum of students is 3 and the maximum is 10\n");
 	SDB_APP ();
 
