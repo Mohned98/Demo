@@ -1,0 +1,13 @@
+CC=gcc
+CFLAGS=-I.
+DEPS=func.h
+OBJS=main.o func.o
+
+hellomake: $(OBJS)
+	$(CC) -o $@ $^
+
+%.o:%.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+clean:
+	del *.o *.exe

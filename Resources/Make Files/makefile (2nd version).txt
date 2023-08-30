@@ -1,0 +1,11 @@
+CC=gcc
+CFLAGS=-I.
+
+main.o:main.c
+	$(CC) -c -o main.o main.c $(CFLAGS)
+
+func.o:func.c
+	$(CC) -c -o func.o func.c $(CFLAGS)
+
+hellomake: main.o func.o
+	$(CC) -o hellomake main.o func.o
