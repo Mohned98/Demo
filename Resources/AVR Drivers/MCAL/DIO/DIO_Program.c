@@ -120,7 +120,7 @@ void Dio_WritePort(Dio_PortType port, uint8 state)
 
 Dio_PinStateType Dio_ReadPin(Dio_PortType port, Dio_PinType pin)
 {
-	return 0;
+
 }
 
 uint8 Dio_ReadPort(Dio_PortType port)
@@ -142,6 +142,6 @@ uint8 Dio_ReadPort(Dio_PortType port)
 
 Dio_PinStateType Dio_TogglePin(Dio_PortType port, Dio_PinType pin)
 {
-	return 0;
+
 }
 
