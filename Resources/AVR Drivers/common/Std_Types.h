@@ -14,6 +14,9 @@ typedef signed long int32;
 typedef unsigned long long uint64;
 typedef signed long long int64;
 
+typedef float  float32;
+typedef double float64;
+
 #define NULL               ((void*)0)
 
 #endif /* COMMON_STD_TYPES_H_ */
