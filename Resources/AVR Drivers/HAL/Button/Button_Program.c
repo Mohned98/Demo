@@ -29,6 +29,7 @@ Dio_PinStateType Button_GetState(uint8 btn)
 				if (Dio_ReadPin(BTN0_PORT, BTN0_PIN) == PRESSED)
 				{
 					btnState = PRESSED;
+					while(Dio_ReadPin(BTN0_PORT, BTN0_PIN) == PRESSED);
 				}
 			}
 			break;
@@ -39,6 +40,7 @@ Dio_PinStateType Button_GetState(uint8 btn)
 				if (Dio_ReadPin(BTN1_PORT, BTN1_PIN) == PRESSED)
 				{
 					btnState = PRESSED;
+					while(Dio_ReadPin(BTN1_PORT, BTN1_PIN) == PRESSED);
 				}
 			}
 			break;
@@ -49,6 +51,7 @@ Dio_PinStateType Button_GetState(uint8 btn)
 				if (Dio_ReadPin(BTN2_PORT, BTN1_PIN) == PRESSED)
 				{
 					btnState = PRESSED;
+					while(Dio_ReadPin(BTN2_PORT, BTN2_PIN) == PRESSED);
 				}
 			}
 			break;
