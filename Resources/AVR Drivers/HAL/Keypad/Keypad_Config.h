@@ -1,0 +1,19 @@
+
+#ifndef HAL_KEYPAD_KEYPAD_CONFIG_H_
+#define HAL_KEYPAD_KEYPAD_CONFIG_H_
+
+#include "DIO_Interface.h"
+
+#define KEYPAD_PORT DIO_PORTA
+
+#define KEYPAD_R0_PIN PIN0
+#define KEYPAD_R1_PIN PIN1
+#define KEYPAD_R2_PIN PIN2
+#define KEYPAD_R3_PIN PIN3
+
+#define KEYPAD_C0_PIN PIN4
+#define KEYPAD_C1_PIN PIN5
+#define KEYPAD_C2_PIN PIN6
+#define KEYPAD_C3_PIN PIN7
+
+#endif /* HAL_KEYPAD_KEYPAD_CONFIG_H_ */

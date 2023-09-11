@@ -14,19 +14,19 @@ void SevenSeg_Display(uint8 num)
 {
 	uint8 units = num % 10;
 	uint8 tens = num / 10;
-	uint8 counter;
+	uint16 counter;
 	Dio_WritePin(SEVENSEG1_EN_PORT, SEVENSEG1_EN_PIN, LOW);
 	Dio_WritePin(SEVENSEG2_EN_PORT, SEVENSEG2_EN_PIN, LOW);
-	for(counter =0; counter<100; counter++)
+	for(counter =0; counter<500; counter++)
 	{
 		Dio_WritePort(SEVENSEG_DISPLAY_PORT, units << SEVENSEG_DISPLAY_SHIFT);
 		Dio_WritePin(SEVENSEG1_EN_PORT, SEVENSEG1_EN_PIN, HIGH);
-		_delay_ms(5);
+		_delay_ms(1);
 		Dio_WritePin(SEVENSEG1_EN_PORT, SEVENSEG1_EN_PIN, LOW);
 
 		Dio_WritePort(SEVENSEG_DISPLAY_PORT, tens << SEVENSEG_DISPLAY_SHIFT);
 		Dio_WritePin(SEVENSEG2_EN_PORT, SEVENSEG2_EN_PIN, HIGH);
-		_delay_ms(5);
+		_delay_ms(1);
 		Dio_WritePin(SEVENSEG2_EN_PORT, SEVENSEG2_EN_PIN, LOW);
 	}
 
