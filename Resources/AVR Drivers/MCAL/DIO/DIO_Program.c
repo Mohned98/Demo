@@ -168,24 +168,24 @@ uint8 Dio_ReadPort(Dio_PortType port)
 		}
 }
 
-Dio_PinStateType Dio_TogglePin(Dio_PortType port, Dio_PinType pin)
+void Dio_TogglePin(Dio_PortType port, Dio_PinType pin)
 {
 	switch (port)
 	{
 		case DIO_PORTA:
 			TOGGLE_BIT(PORTA, pin);
-			return (Dio_PinStateType) GET_BIT(PORTA, pin);
+			break;
 		case DIO_PORTB:
-			TOGGLE_BIT(PORTA, pin);
-			return (Dio_PinStateType) GET_BIT(PORTB, pin);
+			TOGGLE_BIT(PORTB, pin);
+			break;
 		case DIO_PORTC:
-			TOGGLE_BIT(PORTA, pin);
-			return (Dio_PinStateType) GET_BIT(PORTC, pin);
+			TOGGLE_BIT(PORTC, pin);
+			break;
 		case DIO_PORTD:
-			TOGGLE_BIT(PORTA, pin);
-			return (Dio_PinStateType) GET_BIT(PORTD, pin);
+			TOGGLE_BIT(PORTD, pin);
+			break;
 		default:
-			return 0;
+			break;
 	}
 }
 

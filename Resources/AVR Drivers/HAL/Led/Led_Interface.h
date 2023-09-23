@@ -15,7 +15,7 @@ typedef enum
 void Led_Init(LedType led);
 void Led_On(LedType led);
 void Led_Off(LedType led);
-Dio_PinStateType Led_Toggle(LedType led);
+void Led_Toggle(LedType led);
 
 
 #endif /* HAL_LED_LED_INTERFACE_H_ */

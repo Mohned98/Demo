@@ -3,7 +3,6 @@
 #include "ATmega32_RegisterMap.h"
 #include "GIE_Private.h"
 #include "Bit_Math.h"
-#include <avr/interrupt.h>
 
 static void (*Ext_Int_CallBack[3])(void)={NULL};
 

@@ -16,7 +16,7 @@ void Buzzer_Off(void)
 	Dio_WritePin(BUZZER_PORT, BUZZER_PIN, LOW);
 }
 
-Dio_PinStateType Buzzer_Toggle(void)
+void Buzzer_Toggle(void)
 {
-	return Dio_TogglePin(BUZZER_PORT, BUZZER_PIN);
+	Dio_TogglePin(BUZZER_PORT, BUZZER_PIN);
 }

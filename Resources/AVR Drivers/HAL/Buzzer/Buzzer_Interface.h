@@ -7,7 +7,7 @@
 void Buzzer_Init(void);
 void Buzzer_On(void);
 void Buzzer_Off(void);
-Dio_PinStateType Buzzer_Toggle(void);
+void Buzzer_Toggle(void);
 
 
 #endif /* HAL_BUZZER_BUZZER_INTERFACE_H_ */

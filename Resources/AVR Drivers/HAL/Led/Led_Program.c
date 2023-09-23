@@ -53,17 +53,20 @@ void Led_Off(LedType led)
 	}
 }
 
-Dio_PinStateType Led_Toggle(LedType led)
+void Led_Toggle(LedType led)
 {
 	switch(led)
 	{
 		case LED0:
-			return Dio_TogglePin(LED0_PORT, LED0_PIN);
+			Dio_TogglePin(LED0_PORT, LED0_PIN);
+			break;
 		case LED1:
-			return Dio_TogglePin(LED1_PORT, LED1_PIN);
+			Dio_TogglePin(LED1_PORT, LED1_PIN);
+			break;
 		case LED2:
-			return Dio_TogglePin(LED2_PORT, LED2_PIN);
+			Dio_TogglePin(LED2_PORT, LED2_PIN);
+			break;
 		default:
-			return 0;
+			break;
 	}
 }

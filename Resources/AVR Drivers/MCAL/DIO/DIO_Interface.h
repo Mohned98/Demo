@@ -38,7 +38,7 @@ void Dio_WritePin(Dio_PortType port, Dio_PinType pin, Dio_PinStateType state);
 void Dio_WritePort(Dio_PortType port, uint8 state);
 Dio_PinStateType Dio_ReadPin(Dio_PortType port, Dio_PinType pin);
 uint8 Dio_ReadPort(Dio_PortType port);
-Dio_PinStateType Dio_TogglePin(Dio_PortType port, Dio_PinType pin);
+void Dio_TogglePin(Dio_PortType port, Dio_PinType pin);
 
 
 #endif /* MCAL_DIO_DIO_INTERFACE_H_ */
