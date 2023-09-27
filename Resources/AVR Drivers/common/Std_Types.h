@@ -1,3 +1,9 @@
+/*
+ * STD_Types.h
+ *
+ *  Created on: Sep 26, 2023
+ *      Author: Dell
+ */
 
 #ifndef COMMON_STD_TYPES_H_
 #define COMMON_STD_TYPES_H_
@@ -18,5 +24,10 @@ typedef float  float32;
 typedef double float64;
 
 #define NULL               ((void*)0)
+
+typedef enum {
+	false ,
+	true
+}bool;
 
 #endif /* COMMON_STD_TYPES_H_ */

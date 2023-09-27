@@ -1,6 +1,13 @@
+/*
+ * DIO_Interface.h
+ *
+ *  Created on: Sep 26, 2023
+ *      Author: Dell
+ */
 
 #ifndef MCAL_DIO_DIO_INTERFACE_H_
 #define MCAL_DIO_DIO_INTERFACE_H_
+
 
 #include "Std_Types.h"
 
@@ -39,6 +46,7 @@ void Dio_WritePort(Dio_PortType port, uint8 state);
 Dio_PinStateType Dio_ReadPin(Dio_PortType port, Dio_PinType pin);
 uint8 Dio_ReadPort(Dio_PortType port);
 void Dio_TogglePin(Dio_PortType port, Dio_PinType pin);
+
 
 
 #endif /* MCAL_DIO_DIO_INTERFACE_H_ */

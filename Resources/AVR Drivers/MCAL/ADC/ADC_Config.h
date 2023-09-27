@@ -1,16 +1,26 @@
+/*
+ * ADC_Config.h
+ *
+ *  Created on: Sep 27, 2023
+ *      Author: Dell
+ */
 
 #ifndef MCAL_ADC_ADC_CONFIG_H_
 #define MCAL_ADC_ADC_CONFIG_H_
 
 #include "ADC_Private.h"
 
-/* SELECT AREF MODE: AVCC, AREF_PIN,_2V56 */
-#define ADC_V_REF	AVCC
+/*choose from ADC_PRESCALER_2 ---> ADC_PRESCALER_128*/
+#define ADC_PRESCALER_FACTOR   ADC_PRESCALER_128
 
-/* SELECT ADC_CHANNEL: ADC0 -> ADC7 */
-#define ADC_CHANNEL ADC1
+/* choose from 					ADC_REF_AVCC
+ 	 	 	 					ADC_REF_2v56
+ 	 	 	 					ADC_REF_SHIFT  */
+#define ADC_REF    				ADC_REF_AVCC
 
-/* SELECT ADC_PRESCALER: _2_DIVISION_FACTOR -> _128_DIVISION_FACTOR */
-#define ADC_PRESCALER _64_DIVISION_FACTOR
+/*choose from ADC_CHANNEL0 -> ADC_CHANNEL7 */
+#define ADC_CHANNEL             ADC_CHANNEL1
+
+
 
 #endif /* MCAL_ADC_ADC_CONFIG_H_ */

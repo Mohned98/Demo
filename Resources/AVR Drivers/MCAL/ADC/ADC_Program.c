@@ -1,38 +1,37 @@
-#include "ATmega32_RegisterMap.h"
-#include "ADC_Config.h"
 #include "ADC_Interface.h"
 #include "Bit_Math.h"
+#include "ATmega32_RegisterMap.h"
 
-void ADC_Init(void)
+void ADC_Init (void)
 {
-#if   ADC_V_REF   ==   AVCC
-	SET_BIT(ADMUX,REFS0_BIT);
-	CLEAR_BIT(ADMUX,REFS1_BIT);
-#elif ADC_V_REF   ==   AREF_PIN
-	CLEAR_BIT(ADMUX,REFS0_BIT);
-	CLEAR_BIT(ADMUX,REFS1_BIT);
-#elif ADC_V_REF   ==   _2V56
-	SET_BIT(ADMUX,REFS0_BIT);
-	SET_BIT(ADMUX,REFS1_BIT);
-#endif
+	//frequency setting
+	MASK_SET(ADCSRA, ADC_PRESCALER_MASK, ADC_PRESCALER_FACTOR, ADC_PRESCALER_SHIFT);
 
-	/* To select right adjustment */
+	//channel setting
+	MASK_SET(ADMUX, ADC_CHANNEL_MASK, ADC_CHANNEL, ADC_CHANNEL_SHIFT);
+
+	//left or right adjustment (right in this case)
 	CLEAR_BIT(ADMUX,ADLAR_BIT);
 
-	/* To select an ADC channel */
-	ADMUX = (ADMUX & 0b11100000) | ADC_CHANNEL;
+	//Vref setting
+	MASK_SET(ADMUX, ADC_REF_MASK, ADC_REF, ADC_REF_SHIFT );
 
-	/* To select the ADC frequency */
-	ADCSRA = (ADCSRA & 0b11111000) | ADC_PRESCALER;
-
-	/* To enable ADC circuit */
-	SET_BIT(ADCSRA,ADEN_BIT);
 }
 
-uint16  ADC_Read(void)
+void ADC_Enable (void)
 {
-	/* To start conversion */
-	SET_BIT(ADCSRA,ADSC_BIT);
-	while(IS_BIT_CLEARED(ADCSRA,ADIF_BIT));
-	return ADC_VALUE;
+	SET_BIT(ADCSRA, ADEN_BIT);
+}
+
+void ADC_Disable (void)
+{
+	CLEAR_BIT(ADCSRA, ADEN_BIT);
+}
+
+
+uint16 ADC_Read (void)
+{
+	SET_BIT(ADCSRA, ADSC_BIT);
+	while (IS_BIT_CLEARED(ADCSRA, ADIF_BIT));
+	return ADC_VAL;
 }

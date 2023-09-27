@@ -1,104 +1,124 @@
-#include "Ext_Int_Config.h"
-#include "Ext_Int_Interface.h"
+/*
+ * EXT_INT_Program.c
+ *
+ *  Created on: Sep 26, 2023
+ *      Author: Dell
+ */
+
+#include "EXT_INT_Config.h"
+#include "EXT_INT_Interface.h"
 #include "ATmega32_RegisterMap.h"
-#include "GIE_Private.h"
 #include "Bit_Math.h"
+#include "GIE_Private.h"
 
-static void (*Ext_Int_CallBack[3])(void)={NULL};
+static void (*callback_arr[3])(void) = {NULL};
 
-void Ext_Int_Init(uint8 interruptChannel)
+void EXT_INT_Init(uint8 interruptChannel)
 {
-	switch(interruptChannel)
+#if  EXT_INT0_SENSE_CONTROL == RISING_EDGE
+	switch (interruptChannel)
 	{
-		case EXT_INT0:
-	#if EXT_INT0_SENSE_CONTROL == FALLING_EDGE
-			SET_BIT(MCUCR,ISC01_BIT);
-			CLEAR_BIT(MCUCR,ISC00_BIT);
-	#elif EXT_INT0_SENSE_CONTROL == RISING_EDGE
-			SET_BIT(MCUCR,ISC01_BIT);
-			SET_BIT(MCUCR,ISC00_BIT);
-	#elif EXT_INT0_SENSE_CONTROL == LOW_LEVEL
-			CLEAR_BIT(MCUCR,ISC01_BIT);
-			CLEAR_BIT(MCUCR,ISC00_BIT);
-	#elif EXT_INT0_SENSE_CONTROL == LOGICAL_CHANGE
-			CLEAR_BIT(MCUCR,ISC01_BIT);
-			SET_BIT(MCUCR,ISC00_BIT);
-	#endif
-			break;
-		case EXT_INT1:
-	#if EXT_INT1_SENSE_CONTROL == FALLING_EDGE
-			SET_BIT(MCUCR,ISC11_BIT);
-			CLEAR_BIT(MCUCR,ISC10_BIT);
-	#elif EXT_INT1_SENSE_CONTROL == RISING_EDGE
-			SET_BIT(MCUCR,ISC11_BIT);
-			SET_BIT(MCUCR,ISC10_BIT);
-	#elif EXT_INT1_SENSE_CONTROL == LOW_LEVEL
-			CLEAR_BIT(MCUCR,ISC11_BIT);
-			CLEAR_BIT(MCUCR,ISC10_BIT);
-	#elif EXT_INT1_SENSE_CONTROL == LOGICAL_CHANGE
-			CLEAR_BIT(MCUCR,ISC11_BIT);
-			CLEAR_BIT(MCUCR,ISC10_BIT);
-	#endif
-			break;
-		case EXT_INT2:
-	#if EXT_INT2_SENSE_CONTROL == FALLING_EDGE
-			CLEAR_BIT(MCUCR,ISC2_BIT);
-	#elif EXT_INT2_SENSE_CONTROL == RISING_EDGE
-			SET_BIT(MCUCSR,ISC2_BIT);
-	#endif
-			break;
-		default:
-			break;
+	case EXT_INT0:
+		MCUCR = (MCUCR & EXT_INT0_MASK) | RISING_EDGE;
+		break;
+	case EXT_INT1:
+		MCUCR = (MCUCR & EXT_INT1_MASK) | (RISING_EDGE << EXT_INT1_SHIFT);
+		break;
+	case EXT_INT2:
+		MCUCR = (MCUCSR & EXT_INT2_MASK) | (0b1 << EXT_INT2_SHIFT);
+		break;
+	}
+#endif
+#if  EXT_INT0_SENSE_CONTROL == FALLING_EDGE
+	switch (interruptChannel)
+	{
+	case EXT_INT0:
+		MCUCR = (MCUCR & EXT_INT0_MASK) | FALLING_EDGE;
+		break;
+	case EXT_INT1:
+		MCUCR = (MCUCR & EXT_INT1_MASK) | (FALLING_EDGE << EXT_INT1_SHIFT);
+		break;
+	case EXT_INT2:
+		MCUCR = (MCUCSR & EXT_INT2_MASK) | (0b1 << EXT_INT2_SHIFT);
+		break;
+	}
+#endif
+#if  EXT_INT0_SENSE_CONTROL == LOGICAL_CHANGE
+	switch (interruptChannel)
+	{
+	case EXT_INT0:
+		MCUCR = (MCUCR & EXT_INT0_MASK) | LOGICAL_CHANGE;
+		break;
+	case EXT_INT1:
+		MCUCR = (MCUCR & EXT_INT1_MASK) | (LOGICAL_CHANGE << EXT_INT1_SHIFT);
+		break;
+	}
+
+#endif
+#if  EXT_INT0_SENSE_CONTROL == LOW_LEVEL
+	switch (interruptChannel)
+	{
+	case EXT_INT0:
+		MCUCR = (MCUCR & EXT_INT0_MASK) | LOW_LEVEL;
+		break;
+	case EXT_INT1:
+		MCUCR = (MCUCR & EXT_INT1_MASK) | (LOW_LEVEL << EXT_INT1_SHIFT);
+		break;
+	}
+
+#endif
+}
+
+
+
+
+
+void EXT_INT_Enable(uint8 interrupt_channel)
+{
+	switch (interrupt_channel)
+	{
+	case EXT_INT0:
+		SET_BIT(GICR, INT0_BIT);
+		break;
+	case EXT_INT1:
+		SET_BIT(GICR, INT1_BIT);
+		break;
+	case EXT_INT2:
+		SET_BIT(GICR, INT2_BIT);
+		break;
 	}
 }
-void Ext_Int_Enable(uint8 interruptChannel)
+
+void EXT_INT_Disable(uint8 interrupt_channel)
 {
-	switch(interruptChannel)
+	switch (interrupt_channel)
 	{
-		case EXT_INT0:
-			SET_BIT(GICR, INT0_BIT);
-			break;
-		case EXT_INT1:
-			SET_BIT(GICR, INT1_BIT);
-			break;
-		case EXT_INT2:
-			SET_BIT(GICR, INT2_BIT);
-			break;
+	case EXT_INT0:
+		CLEAR_BIT(GICR, INT0_BIT);
+		break;
+	case EXT_INT1:
+		CLEAR_BIT(GICR, INT1_BIT);
+		break;
+	case EXT_INT2:
+		CLEAR_BIT(GICR, INT2_BIT);
+		break;
 	}
 }
 
-void Ext_Int_Disable(uint8 interruptChannel)
+void EXT_INT_Set_Callback(uint8 interrupt_channel,void (*interruptAction)(void))
 {
-	switch(interruptChannel)
-	{
-		case EXT_INT0:
-			CLEAR_BIT(GICR, INT0_BIT);
-			break;
-		case EXT_INT1:
-			CLEAR_BIT(GICR, INT1_BIT);
-			break;
-		case EXT_INT2:
-			CLEAR_BIT(GICR, INT2_BIT);
-			break;
-	}
+	callback_arr[interrupt_channel] = interruptAction;
 }
 
-void Ext_Int_SetCallBack(uint8 interruptChannel, void (*interruptAction)(void))
+ISR (INT0_VECT)
 {
-	Ext_Int_CallBack[interruptChannel] = interruptAction;
+	callback_arr[EXT_INT0]();
 }
-
-ISR(INT0_VECT)
+ISR (INT1_VECT)
 {
-	Ext_Int_CallBack[EXT_INT0]();
+	callback_arr[EXT_INT1]();
 }
-
-ISR(INT1_VECT)
+ISR (INT2_VECT)
 {
-	Ext_Int_CallBack[EXT_INT1]();
-}
-
-ISR(INT2_VECT)
-{
-	Ext_Int_CallBack[EXT_INT2]();
+	callback_arr[EXT_INT2]();
 }
