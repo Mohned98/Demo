@@ -66,5 +66,22 @@
 #define ADSC_BIT     6
 #define ADIF_BIT     4
 
+/**********************  Timer 0  **********************/
+#define TCCR0       (*((volatile uint8* const)0x53))  //TIMER/COUNTER_CONTROL_REGISTER
+#define TCNT0       (*((volatile uint8* const)0x52))  //TIMER/COUNTER_REGISTER
+#define TIMSK       (*((volatile uint8* const)0x59))  //TIMER/COUNTER_INTERRUPT_MASK_REG
+
+/* TCCR0_BITS */
+#define CS00_BIT        0//CS0n_BIT responsible for the prescaler options
+#define CS01_BIT        1
+#define CS02_BIT        2
+#define WGM00_BIT       6
+#define WGM01_BIT       3
+
+/* TIMSK_BITS */    //to enable the timer interrupts when over flow or when couter (for timer 0 only)
+#define TOILE0_BIT      0
+#define OCIE0_BIT       1
+
+
 
 #endif /* MCAL_ATMEGA32_REGISTERMAP_H_ */

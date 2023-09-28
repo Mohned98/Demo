@@ -1,25 +1,26 @@
+/*
+ * Timer0_Private.h
+ *
+ *  Created on: Sep 28, 2023
+ *      Author: amrel
+ */
 
-#ifndef MCAL_TIMER0_TIMER0_PRIVATE_H_
-#define MCAL_TIMER0_TIMER0_PRIVATE_H_
-
-/* Timer Mode*/
-#define   TIMER0_NORMAL_MODE        0
-#define   TIMER0_CTC_MODE           1
-
-/* Timer prescaler */
-#define    TIMER0_PRESCALER_1                   1
-#define    TIMER0_PRESCALER_8                   2
-#define    TIMER0_PRESCALER_64                  3
-#define    TIMER0_PRESCALER_256                 4
-#define    TIMER0_PRESCALER_1024                5
-#define    TIMER0_PRESCALER_EXTCLK_FALLEDGE     6
-#define    TIMER0_PRESCALER_EXTCLK_RAISEDGE     7
-
-/* Timer OC0 Mode */
-#define   TIMER0_OC0_DISCONNECTED        0
-#define   TIMER0_OC0_TOGGLE              1
-#define   TIMER0_OC0_CLEAR               2
-#define   TIMER0_OC0_SET                 3
+#ifndef NASR_60_EMBEDDED_RESOURCES_AVR_DRIVERS_MCAL_TIMER0_TIMER0_PRIVATE_H_
+#define NASR_60_EMBEDDED_RESOURCES_AVR_DRIVERS_MCAL_TIMER0_TIMER0_PRIVATE_H_
 
 
-#endif /* MCAL_TIMER0_TIMER0_PRIVATE_H_ */
+#define TIMER0_PRESCALER_STOP    0b000
+#define TIMER0_PRESCALER_1    	 0b001
+#define TIMER0_PRESCALER_8       0b010
+#define TIMER0_PRESCALER_64      0b011
+#define TIMER0_PRESCALER_256     0b100
+#define TIMER0_PRESCALER_1024    0b101
+#define TIMER0_PRESCALER_MASK    0b00000000
+#define TIMER0_PRESCALER_SHIFT   0
+
+#define TIMER0_MODE_NORMAL       0b0000
+#define TIMER0_MODE_CTC          0b0001
+#define TIMER0_MODE_MASK         0b10110111
+#define TIMER0_MODE_SHIFT        3
+
+#endif /* NASR_60_EMBEDDED_RESOURCES_AVR_DRIVERS_MCAL_TIMER0_TIMER0_PRIVATE_H_ */
