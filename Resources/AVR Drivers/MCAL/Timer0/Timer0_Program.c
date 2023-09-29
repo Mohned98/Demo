@@ -25,11 +25,16 @@ void Timer0_Init(void)
 #elif (TIMER_0_MODE ==  TIMER0_CTC_MODE )
 	CLEAR_BIT(TCCR0,WGM00_BIT);
 	SET_BIT(TCCR0,WGM01_BIT);
+#elif (TIMER_0_MODE ==  TIMER0_PHASECORRECT_MODE )
+	SET_BIT(TCCR0,WGM00_BIT);
+	CLEAR_BIT(TCCR0,WGM01_BIT);
+#elif (TIMER_0_MODE ==  TIMER0_FASTPWM_MODE )
+	SET_BIT(TCCR0,WGM00_BIT);
+	SET_BIT(TCCR0,WGM01_BIT);
 #endif
 
-#if 0
 	TCCR0 = (TCCR0 & TIMER0_OC0_MODE_MASK) | (TIMER_0_OC0_MODE << TIMER0_OC0_SHIFT);
-#endif
+
 }
 
 void Timer0_SetTime(uint32 timeInMS)
@@ -90,6 +95,26 @@ void Timer0_DisableInt(uint8 intId)
 void Timer0_SetCallBack(uint8 intId, void (* interruptAction)(void))
 {
 	Timer0_CallBack[intId] = interruptAction;
+}
+
+void Timer0_SetPWM(uint8 dutyCycle) {
+#if(TIMER_0_MODE ==  TIMER0_FASTPWM_MODE )
+
+	#if(TIMER_0_OC0_MODE ==  TIMER0_OC0_PWM_NON_INVERTING)
+		OCR0 = ((dutyCycle * 256) / 100) - 1;
+	#elif(TIMER_0_OC0_MODE == TIMER0_OC0_PWM_INVERTING)
+		OCR0 = 255 - (((dutyCycle * 256)/100)-1);
+	#endif
+
+#elif(TIMER_0_MODE ==  TIMER0_PHASECORRECT_MODE )
+
+	#if(TIMER_0_OC0_MODE ==  TIMER0_OC0_PWM_NON_INVERTING)
+		OCR0 = (dutyCycle* 255)/100;
+	#elif(TIMER_0_OC0_MODE == TIMER0_OC0_PWM_INVERTING)
+		OCR0 = 255 - ((dutyCycle* 255)/100);
+	#endif
+
+#endif
 }
 
 ISR(TIMER0_OVF_VECT)

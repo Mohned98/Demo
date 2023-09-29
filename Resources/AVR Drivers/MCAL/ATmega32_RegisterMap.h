@@ -64,6 +64,7 @@
 #define TCCR0     (*((volatile uint8* const)0x53))
 #define TIMSK     (*((volatile uint8* const)0x59))
 #define TCNT0     (*((volatile uint8* const)0x52))
+#define OCR0      (*((volatile uint8* const)0x5C))
 
 /* TCCR0 BITS */
 #define WGM00_BIT          6
@@ -76,5 +77,17 @@
 #define OCIE0_BIT          1
 #define TOIE0_BIT          0
 
+
+/**********************  Timer1  **********************/
+#define TCCR1A     (*((volatile uint8* const)0x4F))
+#define TCCR1B     (*((volatile uint8* const)0x4E))
+#define OCR1A      (*((volatile uint16* const)0x4A))
+#define OCR1B      (*((volatile uint16* const)0x48))
+
+/* TCCR1 BITS */
+#define WGM10_BIT          0
+#define WGM11_BIT          1
+#define WGM12_BIT          3
+#define WGM13_BIT          4
 
 #endif /* MCAL_ATMEGA32_REGISTERMAP_H_ */
