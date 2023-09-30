@@ -83,11 +83,30 @@
 #define TCCR1B     (*((volatile uint8* const)0x4E))
 #define OCR1A      (*((volatile uint16* const)0x4A))
 #define OCR1B      (*((volatile uint16* const)0x48))
+#define ICR1       (*((volatile uint16* const)0x46))
 
-/* TCCR1 BITS */
+/* TCCR1A BITS */
 #define WGM10_BIT          0
 #define WGM11_BIT          1
+
+/* TCCR1B BITS */
+#define CS10_BIT           0
+#define CS11_BIT           1
+#define CS12_BIT           2
 #define WGM12_BIT          3
 #define WGM13_BIT          4
+#define ICES1_BIT          6   /* ICU trigger select (0 is falling, 1 is rising) */
+
+/* TIMSK BITS */
+#define TICIE1_BIT         5   /* ICU interrupt Enable/Disable */
+
+/**********************  Watchdog  **********************/
+#define WDTCR    (*((volatile uint8* const)0x41))
+
+#define WDTOE_BIT 4  /* watch dog Turn OFF Enable */
+#define WDE_BIT   3  /* Watch Dog Enable */
+#define WDP2_BIT  2  /* prescaler 2 */
+#define WDP1_BIT  1  /* prescaler 1 */
+#define WDP0_BIT  0  /* prescaler 0 */
 
 #endif /* MCAL_ATMEGA32_REGISTERMAP_H_ */

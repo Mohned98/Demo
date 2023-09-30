@@ -13,6 +13,8 @@
 #define TIMER1_OC1A_SHIFT  6
 #define TIMER1_OC1B_SHIFT  4
 
+static void (*Timer1_ICU_CallBack)(void) = NULL;
+
 void Timer1_Init(void)
 {
 #if(TIMER_1_MODE ==  TIMER1_NORMAL_MODE )
@@ -36,9 +38,6 @@ void Timer1_Init(void)
 	TCCR1A = (TCCR1A & TIMER1_OC1B_MODE_MASK) | (TIMER_1_OC1B_MODE << TIMER1_OC1B_SHIFT);
 #endif
 
-//	TCCR1A = (TCCR1A & TIMER1_OC1A_MODE_MASK) | (TIMER_1_OC1A_MODE << TIMER1_OC1A_SHIFT);
-
-
 }
 
 void Timer1_Start(void)
@@ -46,13 +45,60 @@ void Timer1_Start(void)
 	TCCR1B = (TCCR1B & TIMER1_PRESCALER_MASK) | TIMER_1_PRESCALER;
 }
 
+void Timer1_Stop(void)
+{
+	CLEAR_BIT(TCCR1B,CS10_BIT);
+	CLEAR_BIT(TCCR1B,CS11_BIT);
+	CLEAR_BIT(TCCR1B,CS12_BIT);
+}
+
+uint16 Timer1_ICU_InputRead(void)
+{
+   return ICR1;
+}
+
+void Timer1_ICU_SetCallBack(void (* interruptAction)(void))
+{
+	Timer1_ICU_CallBack = interruptAction;
+}
+
+void Timer1_ICU_EnableInt(void)
+{
+	SET_BIT(TIMSK,TICIE1_BIT);
+}
+
+void Timer1_ICU_DisableInt(void)
+{
+	CLEAR_BIT(TIMSK,TICIE1_BIT);
+}
+
+void Timer1_ICU_SetTrigger(uint8 trigger)
+{
+   switch(trigger)
+   {
+	   case TIMER1_ICU_RISING_TRIGG :
+		   SET_BIT(TCCR1B,ICES1_BIT);
+		   break;
+	   case TIMER1_ICU_FALLING_TRIGG:
+		   CLEAR_BIT(TCCR1B,ICES1_BIT);
+		   break;
+	   default :
+		   break;
+   }
+
+}
+
 void Timer1_SetPWM(uint8 dutyCycle)
 {
-#if(TIMER_1_OC1B_MODE ==  TIMER0_OC0_PWM_NON_INVERTING)
+#if(TIMER_1_OC1B_MODE ==  TIMER1_OC1B_PWM_NON_INVERTING)
 	OCR1B = ((dutyCycle * (OCR1A+1)) / 100) - 1;
-#elif(TIMER_1_OC1B_MODE == TIMER0_OC0_PWM_INVERTING)
+#elif(TIMER_1_OC1B_MODE == TIMER1_OC1B_PWM_INVERTING)
 	OCR1B = OCR1A - (((dutyCycle * (OCR1A+1))/100)-1);
 #endif
 
 }
 
+ISR(TIMER1_CAPT_VCET)
+{
+	Timer1_ICU_CallBack();
+}
